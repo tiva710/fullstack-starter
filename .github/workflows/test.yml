@@ -1,0 +1,27 @@
+# This workflow runs our JUnit tests automatically.
+
+name: Run Tests
+
+# Automatically runs every time someone opens or updates a PR, and every time code is pushed to main
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    # on a fresh Linux computer that GitHub provides
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Download code onto that computer
+      - uses: actions/checkout@v5
+
+      # 2. Install Java
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 17
+
+      # 3. run the tests 
+      - run: mvn -B test

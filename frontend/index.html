@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Team To-Do</title>
+  <style> 
+  /* Some CSS to style the page & cross out tasks listed as done */
+    body { font-family: Arial, sans-serif; max-width: 480px; margin: 40px auto; padding: 0 16px; }
+    h1 { color: #7a1fa2; }
+    li { padding: 6px 0; }
+    .done { text-decoration: line-through; color: #888; }
+  </style>
+</head>
+<body>
+  <!-- Frontend: what the user sees -->
+  <h1>Team To-Do</h1> 
+  <ul id="task-list">
+    <li>Loading tasks...</li>
+  </ul>
+
+  <script>
+    // Step 1: ask the backend for the tasks
+    fetch("/tasks")
+      // Step 2: backend answers with JSON text; turn it into JavaScript objects
+      .then(response => response.json())
+      // Step 3: put each task on the page
+      .then(tasks => {
+        const list = document.getElementById("task-list");
+        list.innerHTML = "";
+        for (const task of tasks) {
+          const item = document.createElement("li");
+          item.textContent = task.name;
+          if (task.done) {item.className = "done";}
+          list.appendChild(item);
+        }
+      })
+      .catch(() => {
+        document.getElementById("task-list").innerHTML =
+          "<li>Could not reach the backend. Is TaskServer running?</li>";
+      });
+  </script>
+</body>
+</html>
