@@ -1,6 +1,6 @@
 # Full-Stack Foundations Starter
 
-Team name: Best Team Ever
+Team name: WolfPack
 
 
 | Layer | Where it lives in this repo |
